@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="_template.xhtml">
+
+	<ui:define name="title">
+		Cliente
+	</ui:define>
+
+	<ui:define name="body">
+
+
+		<h:form>
+
+			<p:messages id="messages" />
+
+			<p:fieldset legend="Detalhes do cliente">
+				<p:panelGrid columns="2">
+
+
+					<h:outputLabel value="Ficha nº:" for="ficha" />
+					<p:inputText id="ficha" value="#{customerBean.customer.ficha}" />
+					<h:outputLabel value="Nome:" for="name" />
+					<p:inputText id="name" value="#{customerBean.customer.name}"
+						required="true" requiredMessage="Nome Obrigatório">
+						<f:ajax event="blur" render="messages" />
+					</p:inputText>
+
+					<h:outputLabel value="Telefone:" for="telephone" />
+					<p:inputMask id="telephone"
+						value="#{customerBean.customer.telephone}" mask="999-9999-9999" />
+
+					<h:outputLabel value="Sexo:" for="sexo" />
+					<p:selectOneMenu id="sexo" value="#{customerBean.customer.sexo}">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItem itemValue="M" itemLabel="Masculino" />
+						<f:selectItem itemValue="F" itemLabel="Feminino" />
+						<f:selectItem itemValue="O" itemLabel="Outros" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Data de nascimento:" for="birthDay" />
+					<p:inputMask id="birthDay"
+						value="#{customerBean.customer.birthDay}" mask="99/99/9999">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timezone="America/Sao_Paulo" />
+					</p:inputMask>
+
+					<h:outputLabel value="Possui carteira de motorista? Quais ?"
+						for="grid" />
+					<p:selectManyCheckbox id="grid"
+						value="#{customerBean.typeDriverLicenses}" layout="grid"
+						columns="3" converter="typeDriverLicenseConverter">
+						<f:selectItems value="#{customerBean.typeDriverLicenses}"
+							var="typeDriverLicense" itemLabel="#{typeDriverLicense}"
+							itemValue="#{typeDriverLicense}" />
+						
+					</p:selectManyCheckbox>
+							
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Endereço">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Cep:" for="zipCode" />
+					<p:inputMask id="zipCode" value="#{customerBean.customer.zipCode}"
+						mask="999-9999" />
+
+
+					<h:outputLabel value="Província:" for="province" />
+					<p:inputText id="province"
+						value="#{customerBean.customer.province}" />
+
+
+					<h:outputLabel value="Cidade:" for="city" />
+					<p:inputText id="city" value="#{customerBean.customer.city}" />
+
+
+					<h:outputLabel value="Rua:" for="addressLine1" />
+					<p:inputText id="addressLine1"
+						value="#{customerBean.customer.addressLine1}" />
+
+
+					<h:outputLabel value="Nome Apartamento/casa:" for="addressLine2" />
+					<p:inputText id="addressLine2"
+						value="#{customerBean.customer.addressLine2}" />
+
+
+					<h:outputLabel value="Ponto" for="mapPoint" />
+					<p:inputText id="mapPoint"
+						value="#{customerBean.customer.mapPoint}" />
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Pedido">
+				<p:panelGrid columns="2">
+					<h:selectManyCheckbox value="#{userData.data}">
+						<f:selectItem itemValue="1" itemLabel="Item 1" />
+						<f:selectItem itemValue="2" itemLabel="Item 2" />
+					</h:selectManyCheckbox>
+
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:commandButton value="Gravar" action="#{customerBean.save}"
+				process="@form" update="formCustomerTable" />
+
+		</h:form>
+
+
+		<h:form id="formCustomerTable">
+			<p:dataTable value="#{customerBean.customers}" var="customer"
+				id="customertable">
+				<p:column headerText="Ficha nº:">
+					<h:outputText value="#{customer.ficha}" />
+				</p:column>
+				<p:column headerText="Nome:" filterBy="#{customer.name}"
+					filterMatchMode="contains">
+					<h:outputText value="#{customer.name}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Telefone</f:facet>
+					<h:outputText value="#{customer.telephone}" />
+				</p:column>
+				<p:column style="width:35px">
+					<f:facet name="header">Sexo</f:facet>
+					<h:outputText value="#{customer.sexo}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">Data de nascimento</f:facet>
+					<h:outputText value="#{customer.birthDay}" />
+				</p:column>
+				<p:column style="width:600px">
+					<f:facet name="header">Endereço</f:facet>
+					<h:outputText
+						value="#{customer.zipCode} #{customer.province} #{customer.city}
+					#{customer.addressLine1} #{customer.addressLine2}" />
+				</p:column>
+				<p:column style="width:35px">
+					<h:outputLink value="http://#{customer.mapPoint}">Ponto</h:outputLink>
+				</p:column>
+
+				<p:column style="width:35px">
+					<h:commandLink value="Editar"
+						action="#{customerBean.load(customer)}"></h:commandLink>
+				</p:column>
+
+				<p:column style="width:35px">
+					<h:commandLink value="Remover"
+						action="#{customerBean.remove(customer)}"></h:commandLink>
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footer" />
+
+</ui:composition>
+</html>
