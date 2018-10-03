@@ -3,13 +3,13 @@ package com.drivingschool.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.drivingschool.model.TypeDriverLicense;
 
-@Component("typeDriverLicenseConverter")
+@FacesConverter("typeDriverLicenseConverter")
 public class TypeDriverLicenseConverter implements Converter {
 
     @Autowired
@@ -26,7 +26,7 @@ public class TypeDriverLicenseConverter implements Converter {
     }
 
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-    	System.out.println("chamando getAsString");
+    	System.out.println("chamando getAS String");
         if(value == null || value.equals("")) {
             return "";
         }
@@ -34,15 +34,5 @@ public class TypeDriverLicenseConverter implements Converter {
         
         return String.valueOf(typeDriverLicense.getId());
     }
-    
-    // Get && Set//
-
-	public TypeDriverLicense getTypeDriverLicense() {
-		return typeDriverLicense;
-	}
-
-	public void setTypeDriverLicense(TypeDriverLicense typeDriverLicense) {
-		this.typeDriverLicense = typeDriverLicense;
-	}
 
 }

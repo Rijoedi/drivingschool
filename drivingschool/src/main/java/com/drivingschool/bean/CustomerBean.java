@@ -1,6 +1,7 @@
 package com.drivingschool.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -19,13 +20,14 @@ public class CustomerBean implements Serializable {
 	private Customer customer = new Customer();
 
 	private Integer typeDriverLicenseId;	
-	
 
 	//Methods//
 
 	public List<TypeDriverLicense> getTypeDriverLicenses(){
-		return this.customer.getTypeDriverLicense();
+		return new DAO<TypeDriverLicense>(TypeDriverLicense.class).listAll();
 	}
+	
+	
 	
 	public void save() {
 		System.out.println("Saving customer " + this.customer.getName());
@@ -56,7 +58,7 @@ public class CustomerBean implements Serializable {
 	public List<Customer> getCustomers(){
 		return new DAO<Customer>(Customer.class).listAll();
 	}
-	
+
 	public Integer getTypeDriverLicenseId() {
 		return typeDriverLicenseId;
 	}
@@ -70,7 +72,6 @@ public class CustomerBean implements Serializable {
 	}
 
 	public void setCustomer(Customer customer) {
-		System.out.println("Calling Set Customer" + customer);
 		this.customer = customer;
 	}
 	

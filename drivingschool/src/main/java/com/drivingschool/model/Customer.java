@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -42,21 +43,20 @@ public class Customer implements Serializable {
 	
 	//Driver License//
 		
-	@OneToMany
-	private List<TypeDriverLicense> typeDriverLicense = new ArrayList<TypeDriverLicense>();
-	
+	@OneToMany(fetch=FetchType.EAGER)
+	private List<TypeDriverLicense> typeDriverLicenses = new ArrayList<TypeDriverLicense>();
 	
 	//Methods//
 
 	
 	//Gets && Sets//
 	
-	public List<TypeDriverLicense> getTypeDriverLicense(){
-		return new DAO<TypeDriverLicense>(TypeDriverLicense.class).listAll();
+	public List<TypeDriverLicense> getTypeDriverLicenses(){
+		return typeDriverLicenses;
 	}
 	
-	public void setTypeDriverLicense(List<TypeDriverLicense> typeDriverLicense) {
-		this.typeDriverLicense = typeDriverLicense;
+	public List<TypeDriverLicense> setTypeDriverLicenses() {
+		return typeDriverLicenses;
 	}
 
 	public Integer getId() {

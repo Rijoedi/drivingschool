@@ -16,9 +16,6 @@ public class TypeDriverLicense implements Serializable {
 	@GeneratedValue
 	private Integer id;
 	private String name;
-	
-	@ManyToOne
-	private Customer customer;
 
 	//Gets && Sets//
 	
