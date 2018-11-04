@@ -51,20 +51,22 @@ public class Customer implements Serializable {
 	
 	//Gets && Sets//
 	
-	public List<TypeDriverLicense> getTypeDriverLicenses(){
-		return typeDriverLicenses;
-	}
-	
-	public List<TypeDriverLicense> setTypeDriverLicenses() {
+	public List<TypeDriverLicense> getTypeDriverLicenses() {
 		return typeDriverLicenses;
 	}
 
+	public void setTypeDriverLicenses(List<TypeDriverLicense> typeDriverLicenses) {
+		this.typeDriverLicenses = typeDriverLicenses;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 	public String getFicha() {
 		return ficha;
 	}

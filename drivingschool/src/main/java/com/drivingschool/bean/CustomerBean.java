@@ -18,17 +18,24 @@ public class CustomerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Customer customer = new Customer();
-
-	private Integer typeDriverLicenseId;	
+	
+	private Integer typeDriverLicenseId;
 
 	//Methods//
+
+	public Integer getTypeDriverLicenseId() {
+		return typeDriverLicenseId;
+	}
+
+	public void setTypeDriverLicenseId(Integer typeDriverLicenseId) {
+		this.typeDriverLicenseId = typeDriverLicenseId;
+	}
 
 	public List<TypeDriverLicense> getTypeDriverLicenses(){
 		return new DAO<TypeDriverLicense>(TypeDriverLicense.class).listAll();
 	}
 	
-	
-	
+
 	public void save() {
 		System.out.println("Saving customer " + this.customer.getName());
 
@@ -57,14 +64,6 @@ public class CustomerBean implements Serializable {
 	
 	public List<Customer> getCustomers(){
 		return new DAO<Customer>(Customer.class).listAll();
-	}
-
-	public Integer getTypeDriverLicenseId() {
-		return typeDriverLicenseId;
-	}
-
-	public void setTypeDriverLicenseId(Integer typeDriverLicenseId) {
-		this.typeDriverLicenseId = typeDriverLicenseId;
 	}
 
 	public Customer getCustomer() {
